@@ -129,6 +129,10 @@ module ResoTransport
       @options ||= {}
     end
 
+    def clear_options
+      @options = {}
+    end
+
     def query_parameters
       @query_parameters ||= {}
     end
