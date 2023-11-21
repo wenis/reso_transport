@@ -2,6 +2,7 @@ require 'rexml/document'
 require 'rexml/streamlistener'
 require 'logger'
 require 'faraday'
+require 'faraday/retry'
 require 'json'
 require 'time'
 
