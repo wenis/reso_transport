@@ -8,6 +8,7 @@ module ResoTransport
       @authentication           = ensure_valid_auth_strategy(options.fetch(:authentication))
       @vendor                   = options.fetch(:vendor, {})
       @faraday_options          = options.fetch(:faraday_options, {})
+      @retry_options            = options.fetch(:retry_options, nil)
       @logger                   = options.fetch(:logger, nil)
       @md_file                  = options.fetch(:md_file, nil)
       @ds_file                  = options.fetch(:ds_file, nil)
@@ -19,6 +20,7 @@ module ResoTransport
     def establish_connection(url)
       Faraday.new(url, @faraday_options) do |faraday|
         faraday.request  :url_encoded
+        faraday.request  :retry, @retry_options
         faraday.response :logger, @logger || ResoTransport.configuration.logger
         faraday.use Authentication::Middleware, @authentication
         faraday.adapter Faraday.default_adapter
